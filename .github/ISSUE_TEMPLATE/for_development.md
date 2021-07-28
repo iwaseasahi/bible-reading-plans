@@ -1,7 +1,7 @@
 ---
 name: 開発用
 about: 開発全般に使用する
-title: Add issue template
+title: ''
 labels: ''
 assignees: iwaseasahi
 
