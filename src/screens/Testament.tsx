@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, View, FlatList } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native';
 import { List } from 'react-native-paper';
 
 const Stack = createStackNavigator();
@@ -40,10 +40,12 @@ const listItems = () => {
         data={tastaments}
         keyExtractor={item => `${item.id}`}
         renderItem={({ item }) => (
-          <List.Item
-            style={styles.item}
-            title={item.text}
-          />
+          <TouchableOpacity>
+            <List.Item
+              style={styles.item}
+              title={item.text}
+            />
+          </TouchableOpacity>
         )}
       />
     </View>
