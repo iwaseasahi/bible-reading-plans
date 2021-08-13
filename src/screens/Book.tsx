@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native';
 import { List } from 'react-native-paper';
 
+import { useNavigation } from '@react-navigation/native';
+
 type Books = {
   id: number;
   testamentId: number;
@@ -48,9 +50,11 @@ type Route = {
   }
 }
 
-export const BookScreen = ({ route }: { route:  Route }) => {
+export const BookScreen = ({ route }: { route: Route }) => {
   const { testamentId } = route.params;
   const data: Books = books.filter(book => book.testamentId === testamentId);
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -59,7 +63,12 @@ export const BookScreen = ({ route }: { route:  Route }) => {
         data={data}
         keyExtractor={item => `${item.id}`}
         renderItem={({ item }) => (
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('chapter', {
+              name: item.name,
+              bookId: item.id,
+            })}
+          >
             <List.Item
               style={styles.item}
               title={item.name}
