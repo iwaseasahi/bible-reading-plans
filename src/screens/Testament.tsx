@@ -5,6 +5,7 @@ import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native';
 import { List } from 'react-native-paper';
 
 import { BookScreen } from './Book';
+import { ChapterScreen } from './Chapter';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,11 @@ export const TestamentScreen = () => {
       <Stack.Screen
         name='book'
         component={BookScreen}
+        options={({ route }) => ({ title: route.params.name })}
+      />
+      <Stack.Screen
+        name='chapter'
+        component={ChapterScreen}
         options={({ route }) => ({ title: route.params.name })}
       />
     </Stack.Navigator>
