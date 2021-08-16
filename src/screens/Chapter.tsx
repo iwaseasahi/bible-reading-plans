@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, FlatList } from 'react-native';
-import { List } from 'react-native-paper';
+import { CheckBox } from 'react-native-elements'
 
 type Chapters = {
   id: number;
@@ -112,16 +112,31 @@ export const ChapterScreen = ({ route }: { route: Route }) => {
   const { bookId } = route.params;
   const data: Chapters = chapters.filter(chapter => chapter.bookId === bookId);
 
+  const [checkedState, setCheckedState] = useState(
+    new Array(data.length).fill(false)
+  );
+
+  const handleOnChange = (position: number) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setCheckedState(updatedCheckedState);
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.list}
         data={data}
         keyExtractor={item => `${item.id}`}
-        renderItem={({ item }) => (
-          <List.Item
-            style={styles.item}
+        renderItem={({ item, index }) => (
+          <CheckBox
+            containerStyle={styles.item}
+            textStyle={styles.checkBoxText}
             title={`${item.number}章`}
+            checked={checkedState[index]}
+            onPress={() => handleOnChange(index)}
           />
         )}
       />
@@ -138,7 +153,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   item: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#e4e6e8',
-  }
+    backgroundColor: '#fff',
+  },
+  checkBoxText: {
+    fontWeight: 'normal',
+    fontSize: 16,
+  },
 });
