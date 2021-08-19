@@ -7,6 +7,14 @@ import { List } from 'react-native-paper';
 import { BookScreen } from './Book';
 import { ChapterScreen } from './Chapter';
 
+import firebase from '../initializers/Firebase';
+
+const testamentsRef = firebase.database().ref('testaments');
+testamentsRef.on('value', (snapshot) => {
+  const data = snapshot.val();
+  console.log(data);
+});
+
 const Stack = createStackNavigator();
 
 type tastaments = {
