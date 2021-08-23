@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet, View, TouchableOpacity, FlatList } from 'react-native';
@@ -9,29 +9,12 @@ import { ChapterScreen } from './Chapter';
 
 import firebase from '../initializers/Firebase';
 
-const testamentsRef = firebase.database().ref('testaments');
-testamentsRef.on('value', (snapshot) => {
-  const data = snapshot.val();
-  console.log(data);
-});
-
 const Stack = createStackNavigator();
 
-type tastaments = {
+type Testaments = {
   id: number;
   name: string;
 }[]
-
-const tastaments = [
-  {
-    id: 1,
-    name: '旧約聖書',
-  },
-  {
-    id: 2,
-    name: '新約聖書',
-  }
-]
 
 export const TestamentScreen = () => {
   return (
@@ -56,13 +39,20 @@ export const TestamentScreen = () => {
 }
 
 const listItems = () => {
+  const [data, setData] = useState<Testaments>([]);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    firebase.database().ref('testaments').once('value').then((snapshot) => {
+      setData(snapshot.val())
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.list}
-        data={tastaments}
+        data={data}
         keyExtractor={item => `${item.id}`}
         renderItem={({ item }) => (
           <TouchableOpacity
