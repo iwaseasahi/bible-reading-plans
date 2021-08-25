@@ -7,7 +7,7 @@ import { List } from 'react-native-paper';
 import { BookScreen } from './Book';
 import { ChapterScreen } from './Chapter';
 
-import firebase from '../initializers/Firebase';
+import firebaseApp from '../initializers/Firebase';
 
 const Stack = createStackNavigator();
 
@@ -43,7 +43,7 @@ const listItems = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    firebase.database().ref('testaments').once('value').then((snapshot) => {
+    firebaseApp.database().ref('testaments').once('value').then((snapshot) => {
       setData(snapshot.val())
     });
   }, []);
