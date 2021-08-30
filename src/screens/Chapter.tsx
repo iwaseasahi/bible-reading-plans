@@ -76,17 +76,17 @@ export const ChapterScreen = ({ route }: { route: Route }) => {
     setCheckedState(updatedCheckedState);
   };
 
-  const storeReadChapter = async (chapter: Chapter) => {
+  const storeReadChapter = (chapter: Chapter) => {
     try {
-      await AsyncStorage.setItem('readChapters:id:' + chapter.id, String(Date.now()));
+      AsyncStorage.setItem('readChapters:id:' + chapter.id, String(Date.now()));
     } catch (e) {
       console.log(e);
     }
   };
 
-  const removeReadChapter = async (chapter: Chapter) => {
+  const removeReadChapter = (chapter: Chapter) => {
     try {
-      await AsyncStorage.removeItem('readChapters:id:' + chapter.id);
+      AsyncStorage.removeItem('readChapters:id:' + chapter.id);
     } catch (e) {
       console.log(e);
     }
